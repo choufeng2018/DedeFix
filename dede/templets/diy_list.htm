@@ -39,10 +39,21 @@ if(!empty($fields))
 			{
 				$fields[$field] = "<a href='{$fields[$field]}' target='_blank'><img src='images/channeladd.gif' border='0' /> 其它附件</a>";
 			}
+			//联动类型显示修正开始
+			else if($fielddata[1]=='stepselect')
+			{
+				$db->Execute('me',"SELECT * FROM `#@__stepselect` WHERE itemname='{$fielddata[0]}'");
+				while($arr = $db->GetArray(me))
+				{
+					$egroup = $arr['egroup'];
+				}
+				$fields[$field] = Getenums("{$fields[$field]}",$egroup);
+			}
+			//联动类型显示修正结束
 			else
 			{
 				if(!in_array($fielddata[1],$allowhtml)){
-					$fields[$field] = dede_htmlspecialchars($fields[$field]);
+					$fields[$field] = htmlspecialchars($fields[$field]);
 				}
 			}
 			echo '<tr><td bgcolor="#ffffff" >'.$fielddata[0].'</td><td bgcolor="#ffffff" colspan="2">'.$fields[$field].'</td></tr>';		
@@ -52,6 +63,58 @@ if(!empty($fields))
 }
 ?>
 {/dede:datalist}
+<?php
+function Getenums($evalue=0,$egroup)
+{
+    if( !isset($GLOBALS['em_'.$egroup.'s']) )
+    {
+        $cachefile = DEDEDATA.'/enums/'.$egroup.'.php';
+        if(!file_exists($cachefile))
+        {
+            require_once(DEDEINC.'/enums.func.php');
+            WriteEnumsCache();
+        }
+        if(!file_exists($cachefile))
+        {
+            return '';
+        }
+        else
+        {
+            require_once($cachefile);
+        }
+    }
+    if($evalue>=500)
+    {
+        if($evalue % 500 == 0)
+        {
+            return (isset($GLOBALS['em_'.$egroup.'s'][$evalue]) ? $GLOBALS['em_'.$egroup.'s'][$evalue] : '');
+        }
+        else if (preg_match("#([0-9]{1,})\.([0-9]{1,})#", $evalue, $matchs))
+        {
+            $esonvalue = $matchs[1];
+            $etopvalue = $esonvalue - ($esonvalue % 500);
+            $esecvalue = $evalue;
+            $GLOBALS['em_'.$egroup.'s'][$etopvalue] = empty($GLOBALS['em_'.$egroup.'s'][$etopvalue])? '' 
+                                                     : $GLOBALS['em_'.$egroup.'s'][$etopvalue];
+            $GLOBALS['em_'.$egroup.'s'][$esonvalue] = empty($GLOBALS['em_'.$egroup.'s'][$esonvalue])? '' 
+                                                     : $GLOBALS['em_'.$egroup.'s'][$esonvalue];
+            $GLOBALS['em_'.$egroup.'s'][$esecvalue] = empty($GLOBALS['em_'.$egroup.'s'][$esecvalue])? '' 
+                                                     : $GLOBALS['em_'.$egroup.'s'][$esecvalue];
+            return $GLOBALS['em_'.$egroup.'s'][$etopvalue].' - '.$GLOBALS['em_'.$egroup.'s'][$esonvalue].' - '.$GLOBALS['em_'.$egroup.'s'][$esecvalue];
+        }
+        else
+        {
+            $elimit = $evalue % 500;
+            $erevalue = $evalue - $elimit;
+            $GLOBALS['em_'.$egroup.'s'][$erevalue] = empty($GLOBALS['em_'.$egroup.'s'][$erevalue])? '' 
+                                                     : $GLOBALS['em_'.$egroup.'s'][$erevalue];
+            $GLOBALS['em_'.$egroup.'s'][$evalue] = empty($GLOBALS['em_'.$egroup.'s'][$evalue])? '' 
+                                                     : $GLOBALS['em_'.$egroup.'s'][$evalue];
+            return $GLOBALS['em_'.$egroup.'s'][$erevalue].' - '.$GLOBALS['em_'.$egroup.'s'][$evalue];
+        }
+    }
+}
+?>
 <tr><td colspan="3" bgcolor="#ffffff">{dede:pagelist listsize=5 /}</td></tr>
 <tr>
 <td colspan="3" height='36' align="center" bgcolor="#F8FCF1">

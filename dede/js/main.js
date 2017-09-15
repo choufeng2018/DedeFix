@@ -682,5 +682,14 @@ function getSelCat(targetId)
 
 　　　　return actualTop;
 　　}
+function SelectImage(fname,stype,imgsel)
+{
+    if($Nav()=='IE'){ var posLeft = window.event.clientX-100; var posTop = window.event.clientY; }
+    else{ var posLeft = 100; var posTop = 100; }
+    if(!fname) fname = 'form1.picname';
+    if(imgsel) imgsel = '&noeditor=yes';
+    if(!stype) stype = '';
+    window.open("../include/dialog/select_images.php?f="+fname+"&noeditor=yes&imgstick="+stype+imgsel, "popUpImagesWin", "scrollbars=yes,resizable=yes,statebar=no,width=650,height=400,left="+posLeft+", top="+posTop);
+}
 
 -->
