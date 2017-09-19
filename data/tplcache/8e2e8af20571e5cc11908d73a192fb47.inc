@@ -1,8 +1,0 @@
-
-  <m:item name='插件管理器' link='plus_main.php' rank='10' target='main' />
-  <m:item name='文件管理器' link='file_manage_main.php' rank='plus_文件管理器' target='main' />
-<m:item name='广告管理' link='ad_main.php' rank='plus_广告管理' target='main' />
-<m:item name='友情链接' link='friendlink_main.php' rank='plus_友情链接模块' target='main' />
-<m:item name='人才招聘' link='job_main.php' rank='plus_人才招聘' target='main' />
-<m:item name="动态密码登录" link="yc_app.php" rank="plus_动态密码登录" target="main" />
-
