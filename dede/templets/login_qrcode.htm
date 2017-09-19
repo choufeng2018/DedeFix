@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="<?php echo $cfg_soft_lang; ?>" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>二维码扫描登录</title>
+        <link rel="stylesheet" type="text/css" href="css/qrcode_style.css" />
+        <script type="text/javascript" src="js/qrcode_jquery.js"></script>
+       
+    </head>
+    <body>
+        <div class="container">
+			<section class="main no-boxshadow">
+				<div class="form-2">
+                	<input type="hidden" name="gotopage" id="gotopage" value="<?php if(!empty($gotopage)){echo urldecode($gotopage);}else{echo 'index.php';} ?>">
+					<h1><span class="sign-up">您正在使用二维码登录</span></h1>
+					<p class="qrlogin">
+						<label for="login" id="msgbox">请使用客户端扫描下方二维码完成登录</label>
+                        <img src="images/qrcode_pixel.gif" id="qrcodeimg" style="background:url(images/qrcode_loading.gif) no-repeat center;" />
+					</p>
+					
+					<p class="clearfix"> 
+						<a href="login.php?logintype=dynamic<?php if(!empty($gotopage)){echo '&gotopage='.$gotopage;} ?>" class="log-qrcode">手机没联网？点此使用动态密码离线验证登录</a>
+					</p>
+				</div>
+			</section>
+        </div>
+		
+        <script type="text/javascript" src="js/qrcode_login.js"></script>
+	</body>
+</html>

@@ -52,6 +52,8 @@ function DelArc($aid, $type='ON', $onlyfile=FALSE,$recycle=0)
     }
 
     $arcRow = $dsql->GetOne($arcQuery);
+	
+	$arcBodyRow = GetArcBody($aid);
 
     //检测权限
     if(!TestPurview('a_Del,sys_ArcBatch'))
@@ -89,38 +91,51 @@ function DelArc($aid, $type='ON', $onlyfile=FALSE,$recycle=0)
     else
     {
         //删除数据库记录
-        if(!$onlyfile)
-        {
-            $query = "Delete From `#@__arctiny` where id='$aid' $whererecycle";
-            if($dsql->ExecuteNoneQuery($query))
-            {
-                $dsql->ExecuteNoneQuery("Delete From `#@__feedback` where aid='$aid' ");
-                $dsql->ExecuteNoneQuery("Delete From `#@__member_stow` where aid='$aid' ");
-                $dsql->ExecuteNoneQuery("Delete From `#@__taglist` where aid='$aid' ");
-                $dsql->ExecuteNoneQuery("Delete From `#@__erradd` where aid='$aid' ");
-                if($addtable != '')
-                {
-                    $dsql->ExecuteNoneQuery("Delete From `$addtable` where aid='$aid'");//2011.7.3 根据论坛反馈，修复删除文章时无法清除附加表中对应的数据 (by：织梦的鱼)
-                }
-                if($issystem != -1)
-                {
-                    $dsql->ExecuteNoneQuery("Delete From `#@__archives` where id='$aid' $whererecycle");
-                }
-                //删除相关附件
-                if($cfg_upload_switch == 'Y')
-                {
-                    $dsql->Execute("me", "SELECT * FROM `#@__uploads` WHERE arcid = '$aid'");
-                    while($row = $dsql->GetArray('me'))
-                    {
-                        $addfile = $row['url'];
-                        $aid = $row['aid'];
-                        $dsql->ExecuteNoneQuery("Delete From `#@__uploads` where aid = '$aid' ");
-                        $upfile = $cfg_basedir.$addfile;
-                        if(@file_exists($upfile)) @unlink($upfile);
-                    }
-                }
-            }
-        }
+		if(!$onlyfile)
+
+		{
+			$query = "Delete From `#@__arctiny` where id='$aid' $whererecycle";
+			if($dsql->ExecuteNoneQuery($query))
+
+			{	
+    			$dsql->ExecuteNoneQuery("Delete From `#@__feedback` where aid='$aid' ");
+    			$dsql->ExecuteNoneQuery("Delete From `#@__member_stow` where aid='$aid' ");
+    			$dsql->ExecuteNoneQuery("Delete From `#@__taglist` where aid='$aid' ");
+    			$dsql->ExecuteNoneQuery("Delete From `#@__erradd` where aid='$aid' ");
+    			if($addtable != '')
+
+
+
+    			{
+    				$dsql->ExecuteNoneQuery("Delete From `$addtable` where aid='$aid' $whererecycle");
+    			}
+    			if($issystem != -1)
+
+    			{
+    				$dsql->ExecuteNoneQuery("Delete From `#@__archives` where id='$aid' $whererecycle");
+
+			    }
+			    //删除相关附件
+    			if($cfg_upload_switch == 'Y')
+
+    			{
+    				$dsql->Execute("me", "SELECT * FROM `#@__uploads` WHERE arcid = '$aid'");
+    				while($row = $dsql->GetArray('me'))
+
+    				{
+    					$addfile = $row['url'];
+    					$aid = $row['aid'];
+    					$dsql->ExecuteNoneQuery("Delete From `#@__uploads` where aid = '$aid' ");
+    					$upfile = $cfg_basedir.$addfile;
+    					if(@file_exists($upfile)) @unlink($upfile);
+
+
+
+
+    				}
+    			}
+		    }
+		}
         //删除文本数据
         $filenameh = DEDEDATA."/textdata/".(ceil($aid/5000))."/{$aid}-".substr(md5($cfg_cookie_encode),0,16).".txt";
         if(@is_file($filenameh)) @unlink($filenameh);
@@ -159,6 +174,30 @@ function DelArc($aid, $type='ON', $onlyfile=FALSE,$recycle=0)
             }
         }
     }
+//解析Body中的资源，并删除 
+  $willDelFiles = GetPicsTruePath($arcBodyRow['body'],$arcRow['litpic']);
+  $nowtime = time(); 
+  $executetime = MyDate('Y-m-d H:i:s',$nowtime);//获得执行时间 
+  $msg = "\r\n文章标题：$arcRow[title]"; 
+  WriteToDelFiles($msg); 
+  if(!empty($willDelFiles)) 
+  { 
+    foreach($willDelFiles as $file) 
+    { 
+      if(file_exists($file) && !is_dir($file)) 
+      { 
+        if(unlink($file)) $msg = "\r\n位置：$file\r\n结果：删除成功！\r\n时间：$executetime"; 
+        else $msg = "\r\n位置：$file\r\n结果：删除失败！\r\n时间：$executetime"; 
+      } 
+      else $msg = "\r\n位置：$file\r\n结果：文件不存！\r\n时间：$executetime"; 
+      WriteToDelFiles($msg); 
+    }//END foreach 
+  } 
+  else 
+  { 
+    $msg = "\r\n未在Body中解析到数据\r\nBody原始数据：$arcBodyRow[body]\r\n时间：$executetime"; 
+    WriteToDelFiles($msg); 
+  } 
 
     return true;
 }

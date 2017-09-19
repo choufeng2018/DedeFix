@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>增加招聘信息</title>
+<link href="css/base.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/calendar/calendar.js"></script>
+<style type="text/css">
+<!--
+.STYLE1 {
+	color: #666666
+}
+-->
+</style>
+
+</head>
+<body>
+
+<table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#D6D6D6">
+  <tr>
+    <td height="28" background="images/tbg.gif" colspan="8" style="padding-left:10px;">
+  <div style="float:left">
+  	<b>招聘信息管理 </b>&nbsp;[<a href="job_add.php"><u>增加招聘信息</u></a>]
+	</div>
+	
+  </td>
+</tr>
+</table >
+
+<form name="form1" action="job_add.php" method="post">
+  <input type="hidden" name="dopost" value="save" />
+  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100" class="bline"><strong>职位名称</strong></td>
+        <td class="bline"><p>
+            <input name="jobname" type="text" id="jobname"  class='iptxt' style="width:200px" />
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>招聘人数</strong></td>
+        <td class="bline"><p>
+            <input name="neednum" type="text"  class='iptxt' id="neednum" style="width:200px" value="1" />
+          </p></td>
+      </tr>
+     
+      <tr>
+        <td width="100" class="bline"><strong>招聘部门</strong></td>
+        <td class="bline"><p>
+            <input name="needpart" type="text" id="needpart"  class='iptxt' style="width:200px" />
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>联系人</strong></td>
+        <td class="bline"><p>
+            <input name="linkman" type="text" id="linkman"  class='iptxt' style="width:200px" />
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>联系电话</strong></td>
+        <td class="bline"><p>
+            <input name="linktel" type="text" id="linktel"  class='iptxt' style="width:200px" />
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>电子邮箱</strong></td>
+        <td class="bline"><p>
+            <input name="email" type="text"  class='iptxt' id="email" style="width:200px" />
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>公司地址</strong></td>
+        <td class="bline"><p>
+            <input name="address" type="text"  class='iptxt' id="address" style="width:300px" />
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>招聘时间</strong></td>
+        <td class="bline"><p>
+            <input name="sendtime" type="text" id="sendtime"  class='iptxt' value="<?php echo $startDay?>"  /> <script language="javascript" type="text/javascript">
+						Calendar.setup({
+							inputField     :    "sendtime",
+							ifFormat       :    "%Y-%m-%d %H:%M",
+							showsTime      :    true,
+							timeFormat     :    "24"
+						});
+				 </script>
+            结束：
+            <input name="exptime" type="text" id="exptime"  class='iptxt'  value="<?php echo $endDay?>" /><script language="javascript" type="text/javascript">
+						Calendar.setup({
+							inputField     :    "exptime",
+							ifFormat       :    "%Y-%m-%d %H:%M",
+							showsTime      :    true,
+							timeFormat     :    "24"
+						});
+				 </script>
+          </p></td>
+      </tr>
+
+     
+      <tr>
+        <td width="100" class="bline"><strong>职位要求</strong></td>
+        <td class="bline"><p>
+            <?php
+	         GetEditor("jobneed", '',"200","Small","print","false");
+	      ?>
+          </p></td>
+      </tr>
+      <tr>
+        <td width="100" class="bline"><strong>职位说明</strong></td>
+        <td class="bline"><p>
+            <?php
+	         GetEditor("msg", '',"200","Small","print","false");
+	      ?>
+          </p></td>
+      </tr>
+ <tr >
+        <td class="bline">&nbsp;</td>
+        <td class="bline"><button type="submit"  class="np coolbg" >保存</button>
+          &nbsp;&nbsp;
+          <button type="reset"  class="np coolbg" >重设</button></td>
+      </tr>
+   
+  </table>
+
+
+</form>
+</body>
+</html>
