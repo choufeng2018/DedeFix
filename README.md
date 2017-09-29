@@ -18,7 +18,7 @@
 ##关于作者
 
 ```javascript
-  var ihubo = {
+  var inyhow = {
     nickName  : "inyhow",
     site : "http://www.inyhow.com [已售]"
   }
