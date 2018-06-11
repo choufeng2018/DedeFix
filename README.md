@@ -17,7 +17,7 @@
 * 2018/05/14 给`arclist标签`增加`notypeid`参数，用来排除栏目文章  `最新源码资料未传送至github`
 * 2018/06/07 给专题页面增加了伪静态插件，`系统配置-核心设置-开启伪静态`专题详情页面url改为/topic/{aid}.html 修改于文件/include/helpers/channelunit.helper.php   增加一段代码 //start `文章页面完美伪静态化`
 * 2018/06/08 文件/include/helpers/channelunit.helper.php   增加一段修正栏目伪静态的url`模拟静态化url`，需要在nginx.conf或者.htaccess文件中加入伪静态规则
-* /include/arc.archives.class.php中function _highlight函数修复关键词替换的bug
+* 2018/06/11 /include/arc.archives.class.php中function _highlight函数修复关键词替换的bug
 ##有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
 
