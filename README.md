@@ -20,7 +20,7 @@
 * 2018/06/11 /include/arc.archives.class.php中function _highlight函数修复关键词替换的bug
 * 2018/06/19 给`arclist标签`if($keyword!='')代码段内调整为 `相关关键词文章提取的语句 ，前台使用方法: {dede:arclist  channelid='1' keyword='[field:keyword']'}`
 * 2018/06/20 后台增加一个全站伪静态规则生成的插件，增加生成apache和nginx伪静态生成规则(iis可以使用apache伪静态文件)
-
+* 2018/06/26 include/dedetag.class.php中 `SaveTo函数`增加判断列表页面页码 title加入页码+canonical标签
 
 ##有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
