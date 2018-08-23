@@ -23,6 +23,23 @@
 * 2018/06/26 include/dedetag.class.php中 `SaveTo函数`增加判断列表页面页码 title加入页码+canonical标签
 * 2018/07/04 dede/article_add.php 增加根据cfg_check_title设定参数判定判断重复标题文章的功能。
 * 2018/07/28 新增加tag模块，非系统tag功能，tag自带后台批量导入关键词，前台自带生成专题页面功能,目前收录了21000多个页面在Google中，百度为171013个页面，百度相对收录审核比较慢些，google则是先大量收录后，开始清理
+* 2018/08/23 修复google search console管理工具中显示旧版的url为软404的问题，在include/helper/extend.helper.php中ParamError下面加入如下代码，让页面返回正确的http 404状态码
+
+```php
+/** 2018/8/23 add 显示一个错误 返回错误信息和404状态码 */
+if (!function_exists('RturnFor'))
+{
+   function RturnFor()
+     {
+        header("HTTP/1.1 404");
+        echo '对不起，你输入的参数有误！';
+        exit();
+     }
+}
+```
+##Bug
+
+* 目前发现的dedecms伪静态后，文章分页无法使用bug，需要改几处文件，暂时先记在这里
 
 ##有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
