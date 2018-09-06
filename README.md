@@ -24,6 +24,7 @@
 * 2018/07/04 dede/article_add.php 增加根据cfg_check_title设定参数判定判断重复标题文章的功能。
 * 2018/07/28 新增加tag模块，非系统tag功能，tag自带后台批量导入关键词，前台自带生成专题页面功能,目前收录了21000多个页面在Google中，百度为171013个页面，百度相对收录审核比较慢些，google则是先大量收录后，开始清理
 * 2018/08/23 修复google search console管理工具中显示旧版的url为软404的问题，在include/helper/extend.helper.php中ParamError下面加入如下代码，让页面返回正确的http 404状态码
+* 2018/09/06 为适应MIP网站趋势，在/include/extend.func.php文件中加入个replaceMipImages函数 用于替换img标签为 <mip img
 
 ```php
 /** 2018/8/23 add 显示一个错误 返回错误信息和404状态码 */
