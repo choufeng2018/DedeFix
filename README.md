@@ -27,6 +27,7 @@
 * 2018/09/06 为适应MIP网站趋势，在/include/extend.func.php文件中加入个replaceMipImages函数 用于替换img标签为 <mip img
 * 2018/09/25 精简掉一些组件，包含guestbook插件等，主要为了降低网站程序被注入的风险
 * 2018/10/24 修正后台有个redirecturl功能不能直接显示跳转url问题，更新补丁于/include/helpers/channelunit.helper.php 约160行左右
+* 2018/10/31 修正增加一个/dede/article_add.php 109行增加 自动生成作者名的功能
 ```php
 /** 2018/8/23 add 显示一个错误 返回错误信息和404状态码 */
 if (!function_exists('RturnFor'))
