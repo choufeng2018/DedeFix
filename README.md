@@ -29,6 +29,7 @@
 * 2018/10/24 修正后台有个redirecturl功能不能直接显示跳转url问题，更新补丁于/include/helpers/channelunit.helper.php 约160行左右
 * 2018/10/31 修正增加一个/dede/article_add.php 109行增加 自动生成随机作者名的功能
 * 2019/02/12 之前误删除网站模块，目前调整了/topic/arc-{id}.html 为/topic/{id}-html 并将旧url重定向新url写了301重定向规则
+* 2019/02/13 将/tags.php?/关键词/ 调整为/tags.php/id.html形式，便于页面收录和统计
 ```php
 /** 2018/8/23 add 显示一个错误 返回错误信息和404状态码 */
 if (!function_exists('RturnFor'))
